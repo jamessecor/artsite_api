@@ -1,0 +1,51 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+@import "bootstrap_overrides";
+@import "bootstrap";
+
+body, #root-container {
+  background: lightgray;
+}
+
+.alert {
+  position: fixed;
+  top: 8px;
+  left: 50%;
+  //margin-left: - calc(width / 2)px;
+}
+
+.alert-hidden {
+  opacity: 0;
+  transition: all ease-in 3s;
+}
+.alert-shown {
+  opacity: 100%;
+  transition: all ease-out 1s;
+}
+
+img {
+  border-radius: 10%;
+  border: 10px solid lightsteelblue;
+  &:hover {
+    filter: hue-rotate(180deg);
+    //filter: sepia(100%);
+  }
+}
+// TODO: make artworks color evolve with on off toggle
+//revolvingColor {
+//  transition:
+//}
