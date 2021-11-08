@@ -20,10 +20,10 @@ class Artworks extends React.Component {
 
     render() {
         return (
-            <div className="row mb-6">
+            <div className="row">
                 {this.state.artworks.map((artwork, i) => {
                     return (
-                        <div key={artwork.id} className="col-lg-3 col-12">
+                        <div key={artwork.id} className="col-lg-3 col-12 mb-4">
                             <div key={artwork.id}>
                                 <Artwork key={artwork.id} attributes={artwork} isEditable={this.state.isLoggedIn}/>
                             </div>

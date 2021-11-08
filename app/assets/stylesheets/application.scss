@@ -39,7 +39,7 @@ body, #root-container {
 
 img {
   border-radius: 10%;
-  border: 10px solid lightsteelblue;
+  border: 10px solid gray;
   &:hover {
     filter: hue-rotate(180deg);
     //filter: sepia(100%);

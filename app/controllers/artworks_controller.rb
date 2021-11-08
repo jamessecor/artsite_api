@@ -8,7 +8,7 @@ class ArtworksController < ApplicationController
     else
       artworks_query = Artwork.order(:created_at)
       artworks_query = artworks_query.where(year: params[:year_filter]) if params[:year_filter].present?
-      artworks = artworks_query.last(5)
+      artworks = artworks_query
     end
     respond_to do |format|
       format.json { render :json => artworks.map(&:as_json) }

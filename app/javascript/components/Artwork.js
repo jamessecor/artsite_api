@@ -1,6 +1,7 @@
 import React from "react"
 import FadeOut from "./FadeOut"
 import ArtworkForm from "./ArtworkForm"
+import MovingColorImg from "./MovingColorImg";
 
 class Artwork extends React.Component {
     constructor(props) {
@@ -143,7 +144,8 @@ class Artwork extends React.Component {
             return (
                 <div className="row justify-content-center">
                     <div className="col-lg-6 col-12">
-                        <img className="w-100" src={this.state.image} alt="image not available"/>
+                        <MovingColorImg src={this.state.image} />
+                        {/*<img className="w-100" src={this.state.image} alt="image not available"/>*/}
                     </div>
                     <div className="align-self-end artwork-info col-lg-6 col-12">
                         <div className="d-flex flex-column ms-2">
