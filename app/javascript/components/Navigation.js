@@ -85,8 +85,6 @@ class Navigation extends React.Component {
     }
 
     fetchArtworks() {
-        console.log(this.state.searchTerm);
-        console.log(this.state.filter);
         let params = [];
         if (this.state.searchTerm !== undefined) {
             params.push(`search=${this.state.searchTerm}`);
@@ -94,7 +92,6 @@ class Navigation extends React.Component {
         if (this.state.filter !== undefined) {
             params.push(`year_filter=${this.state.filter}`);
         }
-        console.log(params.join('&'));
         fetch(`/artworks?${params.join('&')}`,
             {
                 headers: {
