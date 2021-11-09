@@ -7,8 +7,6 @@ import PriceFormatter from "./PriceFormatter";
 class Artwork extends React.Component {
     constructor(props) {
         super(props);
-
-        console.log(this.props.attributes);
         this.state = {
             isPreview: false,
             imageAdded: false,

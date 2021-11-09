@@ -6,6 +6,7 @@ import ContactForm from "./ContactForm"
 class Navigation extends React.Component {
     constructor(props) {
         super(props);
+
         this.state = {
             currentPage: 'home',
             isLoggedIn: props.isLoggedIn,

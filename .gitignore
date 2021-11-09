@@ -40,5 +40,6 @@ yarn-debug.log*
 .yarn-integrity
 
 /db/data/*.csv
-/db/data/artwork_images/*
-/db/data/expense_pdfs/*
+/db/data/artwork_images
+/db/data/expense_pdfs
+.idea
