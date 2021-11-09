@@ -2,14 +2,18 @@ import React from "react"
 import FadeOut from "./FadeOut"
 import ArtworkForm from "./ArtworkForm"
 import MovingColorImg from "./MovingColorImg";
+import PriceFormatter from "./PriceFormatter";
 
 class Artwork extends React.Component {
     constructor(props) {
         super(props);
+
+        console.log(this.props.attributes);
         this.state = {
             isPreview: false,
             imageAdded: false,
             isShowingAlert: false,
+            isShowingInfo: false,
             submitButtonId: props.isNew ? "submitButtonNew" : "submitButton-" + props.attributes.id,
             flashMessage: "",
             submitButtonValue: props.isNew ? "Create" : "Update",
@@ -20,18 +24,26 @@ class Artwork extends React.Component {
             medium: props.attributes.medium,
             year: props.attributes.year,
             price: props.attributes.price,
-            image: props.attributes.image
+            image: props.attributes.image,
+            saleDate: props.attributes.sale_date
         };
 
-        // This binding is necessary to make `this` work in class methods
         this.togglePreview = this.togglePreview.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.toggleShowInfo = this.toggleShowInfo.bind(this);
     }
 
     togglePreview() {
         this.setState(prevState => ({
             isPreview: !prevState.isPreview
+        }));
+    }
+
+    toggleShowInfo(e) {
+        e.preventDefault();
+        this.setState(prevState => ({
+            isShowingInfo: !prevState.isShowingInfo
         }));
     }
 
@@ -111,7 +123,7 @@ class Artwork extends React.Component {
                     {this.state.insertNewForm ? <ArtworkForm/> : ""}
                     <form className="d-flex mb-4 justify-content-center" onSubmit={this.handleSubmit}>
                         <div className="col-lg-6 col-12">
-                            <img className="w-100" src={this.state.image} alt="image not available"/>
+                            <MovingColorImg src={this.state.image}/>
                         </div>
                         <div className="align-self-end artwork-info col-lg-6 col-12">
                             <div className="d-flex flex-column ms-2">
@@ -143,21 +155,22 @@ class Artwork extends React.Component {
         } else {
             return (
                 <div className="row justify-content-center">
-                    <div className="col-lg-6 col-12">
-                        <MovingColorImg src={this.state.image} />
-                        {/*<img className="w-100" src={this.state.image} alt="image not available"/>*/}
-                    </div>
-                    <div className="align-self-end artwork-info col-lg-6 col-12">
-                        <div className="d-flex flex-column ms-2">
-                            <button className={this.state.isEditable ? 'btn btn-primary' : 'btn btn-primary d-none'}
-                                    type="button" onClick={this.togglePreview}>edit
-                            </button>
-                            <div>{this.state.title}</div>
-                            <div>{this.state.year}</div>
-                            <div>{this.state.price}</div>
-                            <div>{this.state.medium}</div>
+                    <div className="col-lg-11 col-11 pe-1">
+                        <MovingColorImg src={this.state.image}/>
+                        <div className={this.state.isShowingInfo ? "" : "d-none"}>
+                            <div className="d-flex flex-column ms-2">
+                                <button className={this.state.isEditable ? 'btn btn-primary' : 'btn btn-primary d-none'}
+                                        type="button" onClick={this.togglePreview}>edit
+                                </button>
+                                <div className="fw-bold">{this.state.title}</div>
+                                <div>{this.state.year}</div>
+                                <div>{this.state.medium}</div>
+                                <PriceFormatter value={this.state.price} saleDate={this.state.saleDate}/>
+                            </div>
                         </div>
                     </div>
+                    <a href="" onClick={this.toggleShowInfo}
+                       className="align-self-end fa fa-info-circle ps-0 col-lg-1 col-1 text-decoration-none"></a>
                 </div>
             );
         }

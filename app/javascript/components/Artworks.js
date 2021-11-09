@@ -20,7 +20,7 @@ class Artworks extends React.Component {
 
     render() {
         return (
-            <div className="row">
+            <div className="row align-items-center">
                 {this.state.artworks.map((artwork, i) => {
                     return (
                         <div key={artwork.id} className="col-lg-3 col-12 mb-4">

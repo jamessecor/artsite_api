@@ -3,7 +3,7 @@ import React from 'react';
 class MovingColorImg extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {rotationAmount: 0};
+        this.state = {rotationAmount: Math.random() * 360};
         this.clearInterval = this.clearInterval.bind(this);
     }
 

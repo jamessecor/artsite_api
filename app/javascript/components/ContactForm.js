@@ -100,7 +100,7 @@ class ContactForm extends React.Component {
                         <label className="form-label" htmlFor="email">Email</label>
                         <input className="form-control" type="email" name="email" value={this.state.inputs.email}
                                onChange={this.handleChange} required />
-                        <div className={this.state.errors.indexOf("email") >= 0 ? "invalid-feedback" : "valid-feedback"}>Email is required</div>
+                        <div className={this.state.errors.indexOf("email") >= 0 ? "invalid-feedback" : "valid-feedback"}>A valid email address is required</div>
                     </div>
                     <div className="mb-3">
                         <label className="form-label" htmlFor="message">Message</label>
