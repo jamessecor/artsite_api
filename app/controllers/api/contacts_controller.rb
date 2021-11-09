@@ -11,8 +11,10 @@ module Api
       )
       if contact.persisted?
         response = { status: :ok, message: "Thank you for your submission" }
+      elsif contact.errors.any?
+        response = { status: :failure, errors: contact.errors.objects.map(&:attribute).uniq }
       else
-        response = { status: :failure }
+        response = { status: :invalid }
       end
 
       respond_to do |format|

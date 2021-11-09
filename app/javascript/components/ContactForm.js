@@ -5,6 +5,7 @@ class ContactForm extends React.Component {
         super(props);
         this.state = {
             isSubmitted: false,
+            errors: [],
             inputs: {
                 firstname: props.inputs == null ? "" : props.inputs.firstname,
                 lastname: props.inputs == null ? "" : props.inputs.lastname,
@@ -53,9 +54,9 @@ class ContactForm extends React.Component {
             .then(res => res.json())
             .then(
                 (result) => {
-                    console.log(result);
                     if (result["status"] == "ok") {
                         this.setState({
+                            errors: [],
                             inputs: {
                                 firstname: "",
                                 lastname: "",
@@ -64,10 +65,12 @@ class ContactForm extends React.Component {
                             }
                         })
                     } else if (result["status"] == "failure") {
+                        this.setState({
+                            errors: result["errors"],
+                        })
                     }
                     this.setState({
-                        flashMessage: result["message"],
-                        isShowingAlert: true
+                        isSubmitted: true
                     })
                     // Re-enable the submit button
                     submitButton.disabled = false;
@@ -76,26 +79,39 @@ class ContactForm extends React.Component {
     }
 
     render() {
-        if (this.state.isSubmitted) {
+        if (this.state.isSubmitted && this.state.errors.length == 0) {
             return (
-                <div>thanks for your message!</div>
+                <div className="d-flex justify-content-center">thanks for your message!</div>
             )
         } else {
             return (
-                <form onSubmit={this.handleSubmit}>
-                    <label htmlFor="email">Email</label>
-                    <input type="email" name="email" value={this.state.inputs.email} onChange={this.handleChange}/>
-                    <label htmlFor="firstname">First Name</label>
-                    <input type="text" name="firstname" value={this.state.inputs.firstname}
-                           onChange={this.handleChange}/>
-                    <label htmlFor="lastname">Last Name</label>
-                    <input type="text" name="lastname" value={this.state.inputs.lastname} onChange={this.handleChange}/>
-                    <label htmlFor="message">Message</label>
-                    <textarea rows="3" name="message" value={this.state.inputs.message}
-                              onChange={this.handleChange}/>
-                    <button className="btn btn-primary" onClick={(e) => this.handleSubmit(e)} type="submit"
-                            name="submitContact">Submit
-                    </button>
+                <form className={this.state.isSubmitted ? 'was-validated col-lg-6 offset-lg-3': 'needs-validation col-lg-6 offset-lg-3'} onSubmit={this.handleSubmit}>
+                    <div className="mb-3">
+                        <label className="form-label" htmlFor="firstname">First Name</label>
+                        <input className="form-control" type="text" name="firstname" value={this.state.inputs.firstname}
+                               onChange={this.handleChange}/>
+                    </div>
+                    <div className="mb-3">
+                        <label className="form-label" htmlFor="lastname">Last Name</label>
+                        <input className="form-control" type="text" name="lastname" value={this.state.inputs.lastname}
+                               onChange={this.handleChange}/>
+                    </div>
+                    <div className="mb-3">
+                        <label className="form-label" htmlFor="email">Email</label>
+                        <input className="form-control" type="email" name="email" value={this.state.inputs.email}
+                               onChange={this.handleChange} required />
+                        <div className={this.state.errors.indexOf("email") >= 0 ? "invalid-feedback" : "valid-feedback"}>Email is required</div>
+                    </div>
+                    <div className="mb-3">
+                        <label className="form-label" htmlFor="message">Message</label>
+                        <textarea className="form-control" rows="3" name="message" value={this.state.inputs.message}
+                                  onChange={this.handleChange} />
+                    </div>
+                    <div className="mb-3">
+                        <button className="btn btn-primary" onClick={(e) => this.handleSubmit(e)} type="submit"
+                                name="submitContact">Submit
+                        </button>
+                    </div>
                 </form>
             )
         }
