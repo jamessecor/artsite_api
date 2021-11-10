@@ -28,7 +28,7 @@ Things you may want to cover:
 * use production mode of react
 * move react to its own app
 * show/hide all artwork info button
-* move to postgres - DONE
+* -- DONE -- move to postgres
 * add recaptcha to contact form
 * finish and format CV
 * add other effects for images: sepia, b&w, etc.
