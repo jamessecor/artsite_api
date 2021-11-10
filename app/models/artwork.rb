@@ -14,7 +14,7 @@ class Artwork < ApplicationRecord
 
   def as_json(options = {})
     hash = super(options)
-    hash["image"] = Rails.application.routes.url_helpers.rails_blob_path(image, only_path: true) if image.present?
+    hash["image"] = "#{ENV.fetch("HOST", "")}#{Rails.application.routes.url_helpers.rails_blob_url(image, only_path: true)}" if image.present?
     hash
   end
 

@@ -23,12 +23,5 @@ Things you may want to cover:
 
 * ...
 
-### TODO ###
-* make rails app api only
-* use production mode of react
-* move react to its own app
-* show/hide all artwork info button
-* -- DONE -- move to postgres
-* add recaptcha to contact form
-* finish and format CV
-* add other effects for images: sepia, b&w, etc.
+# TODO
+* add tags to artwork so that I can search for rainbows etc
