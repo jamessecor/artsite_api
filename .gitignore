@@ -43,3 +43,4 @@ yarn-debug.log*
 /db/data/artwork_images
 /db/data/expense_pdfs
 .idea
+.env

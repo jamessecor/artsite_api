@@ -4,7 +4,7 @@ class ArtworksController < ApplicationController
   def index
     if params[:search].present?
       term = params[:search]
-      artworks = Artwork.where("title like ? or medium like ? or year like ? or price like ?", "%#{term}%", "%#{term}%", "%#{term}%", "%#{term}%")
+      artworks = Artwork.where("title like ? or medium like ? or year = ? or price = ?", "%#{term}%", "%#{term}%", term, term)
     else
       artworks_query = Artwork.order(:created_at)
       artworks_query = artworks_query.where(year: params[:year_filter]) if params[:year_filter].present?
