@@ -25,3 +25,4 @@ Things you may want to cover:
 
 # TODO
 * add tags to artwork so that I can search for rainbows etc
+* add filter for sold vs available

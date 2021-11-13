@@ -1,7 +1,6 @@
 class CreateArtworksAndShows < ActiveRecord::Migration[6.1]
   def change
     create_table :artworks do |t|
-      t.integer :show_id
       t.string :title
       t.string :medium
       t.integer :year
