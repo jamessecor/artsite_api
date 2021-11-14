@@ -5,14 +5,14 @@ module Api
     #   render json: {}, status: :unprocessable_entity
     # end
 
-    def create
-      user = User.create(user_params)
-      if user.valid?
+    def jwt_token
+      user = User.find_by(id: params[:id])
+      if user.present?
         payload = {user_id: user.id}
         token = encode_token(payload)
-        render json: {user: user, jwt: token}
+        render json: {user: user, jwt: token, status: :ok}
       else
-        render json: {errors: user.errors.full_messages}, status: :not_acceptable
+        render json: {errors: user.errors.full_messages, status: :unprocessable_entity}
       end
     end
 
