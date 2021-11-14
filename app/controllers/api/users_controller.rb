@@ -8,7 +8,7 @@ module Api
     def jwt_token
       user = User.find_by(id: params[:id])
       if user.present?
-        payload = {user_id: user.id}
+        payload = {user_id: user.id, email: user.email}
         token = encode_token(payload)
         render json: {user: user, jwt: token, status: :ok}
       else

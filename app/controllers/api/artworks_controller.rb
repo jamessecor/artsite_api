@@ -1,24 +1,23 @@
 module Api
-
   class ArtworksController < ApplicationController
-    # def image
-    #   artwork = Artwork.find_by(id: params[:id])
-    #   result = {}
-    #   if artwork&.image&.attached?
-    #     result["src"] = rails_blob_url(artwork.image)
-    #     result["status"] = :ok
-    #     render json: result
-    #   else
-    #     head :not_found
-    #   end
-    # end
+    include ApplicationHelper
+
+    before_action :verify_token, only: [:create, :update]
+
+    def verify_token
+      if params["token"].present?
+        verify_jwt(params["token"])
+      else
+        render json: {message: "Couldn't verify token"}, status: :unauthorized
+      end
+    end
 
     def index
       if params[:search].present?
         term = params[:search]
         artworks = Artwork.where("title like ? or medium like ? or year = ? or price = ?", "%#{term}%", "%#{term}%", term, term)
       else
-        artworks_query = Artwork.order(:created_at).limit(1) # TODO: Remove limit(1)
+        artworks_query = Artwork.order(:created_at).limit(15) # TODO: Remove limit(1)
         artworks_query = artworks_query.where(year: params[:year_filter]) if params[:year_filter].present?
         artworks = artworks_query
       end
