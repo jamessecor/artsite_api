@@ -1,4 +1,9 @@
 module ApplicationHelper
+
+  def encode_token(payload)
+    JWT.encode(payload, ENV["API_SECRET"])
+  end
+
   def verify_jwt(token)
     verified_admin = false
 
@@ -6,7 +11,7 @@ module ApplicationHelper
     if User.admin.find_by(id: decoded_token.first["user_id"]).present?
       verified_admin = true
     end
-    render json: {decoded_token: decoded_token}, status: :unauthorized unless verified_admin
+    verified_admin
   end
 
 end

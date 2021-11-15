@@ -1,26 +1,26 @@
 module Api
   class ArtworksController < ApplicationController
-    include ApplicationHelper
-
     before_action :verify_token, only: [:create, :update]
 
+    # Stops processing unless we have a token and it can be verified to be an admin user
     def verify_token
-      if params["token"].present?
-        verify_jwt(params["token"])
-      else
-        render json: {message: "Couldn't verify token"}, status: :unauthorized
+      unless params["token"].present? && verify_jwt(params["token"])
+        render json: {message: "Cannot verify login"}, status: :unauthorized
       end
     end
 
     def index
+      # TODO: Deal with pagination
       if params[:search].present?
         term = params[:search]
-        artworks = Artwork.where("title like ? or medium like ? or year = ? or price = ?", "%#{term}%", "%#{term}%", term, term)
+        artworks = Artwork.all
+        artworks = artworks.where("year = ? or price = ?", term, term) if term.is_a? Integer
+        artworks = artworks.where("title like ? or medium like ?", "%#{term}%", "%#{term}%") if term.is_a? String
       else
-        artworks_query = Artwork.order(:created_at).limit(15) # TODO: Remove limit(1)
-        artworks_query = artworks_query.where(year: params[:year_filter]) if params[:year_filter].present?
-        artworks = artworks_query
+        artworks = Artwork.order(:created_at).limit(15)
+        artworks = artworks.where(year: params[:year_filter]) if params[:year_filter].present?
       end
+      artworks = artworks.limit(params[:limit]) if params[:limit].present?
       render :json => artworks.map(&:as_json)
     end
 
