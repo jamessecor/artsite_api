@@ -14,12 +14,13 @@ module Api
       if params[:search].present?
         term = params[:search]
         artworks = Artwork.all
-        artworks = artworks.where("year = ? or price = ?", term, term) if term.is_a? Integer
-        artworks = artworks.where("title like ? or medium like ?", "%#{term}%", "%#{term}%") if term.is_a? String
+        artworks = artworks.where("lower(title) like ? or lower(medium) like ?", "%#{term.downcase}%", "%#{term.downcase}%") if term.to_i == 0
+        artworks = artworks.where("year = ? or price = ?", term, term) if term.to_i > 0
       else
         artworks = Artwork.order(:created_at).limit(15)
         artworks = artworks.where(year: params[:year_filter]) if params[:year_filter].present?
       end
+      artworks = artworks.reorder("RANDOM()") if params[:random].present?
       artworks = artworks.limit(params[:limit]) if params[:limit].present?
       render :json => artworks.map(&:as_json)
     end
