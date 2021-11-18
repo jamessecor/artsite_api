@@ -26,6 +26,7 @@ namespace :import_data do
         tax_paid: row["taxStatus"].present?
       )
       puts "Imported #{row["title"]} successfully"
+      ActiveRecord::Base.connection.reset_pk_sequence!('artworks')
     end
   end
 
@@ -67,6 +68,7 @@ namespace :import_data do
         message: row["c_note"]
       )
     end
+    ActiveRecord::Base.connection.reset_pk_sequence!('contacts')
   end
 
   task :import_expenses => :environment do
@@ -80,8 +82,8 @@ namespace :import_data do
         cost: row["cost"],
         incurred_at: row["expenseDate"]
       )
-
     end
+    ActiveRecord::Base.connection.reset_pk_sequence!('expenses')
   end
 
   task :import_expense_pdfs => :environment do

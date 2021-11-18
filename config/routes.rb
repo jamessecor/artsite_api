@@ -4,11 +4,10 @@ Rails.application.routes.draw do
   # root to: 'api/artworks#index'
 
   namespace :api do
-    post "/login", to: "auth#login"
-    get "/auto_login", to: "auth#auto_login"
-    get "/user_is_authed", to: "auth#user_is_authed"
 
     resource :users, only: [:create] do
+      get :auto_login
+
       member do
         get :jwt_token, controller: :users, action: :jwt_token
       end

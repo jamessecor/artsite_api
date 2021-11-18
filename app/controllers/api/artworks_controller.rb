@@ -30,9 +30,9 @@ module Api
       artwork = Artwork.create(permitted_params)
       if artwork.persisted?
         artwork.image.attach(params[:image]) if params[:image].present?
-        response = { :status => "ok", :insertNewForm => true, :artwork => artwork.to_json(serialization_options), :message => "Successfully created #{params[:title]}!" }
+        response = { status: :ok, :insertNewForm => true, :artwork => artwork.to_json(serialization_options), :message => "Successfully created #{params[:title]}!" }
       else
-        response = { :status => "failure", :message => "Unable to create artwork." }
+        response = { status: :unprocessable_entity, :message => artwork.errors.full_messages }
       end
       respond_to do |format|
         format.json  { render :json => response }
@@ -53,8 +53,7 @@ module Api
     private
 
     def permitted_params
-      params.permit(%w[id title year medium price])
-      # params.require(:artwork).permit(%w[id title year medium price])
+      params.permit(%w[title year medium price])
     end
   end
 end

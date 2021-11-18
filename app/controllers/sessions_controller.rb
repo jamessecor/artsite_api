@@ -9,7 +9,6 @@ class SessionsController < Devise::SessionsController
       respond_with resource, location: after_sign_in_path_for(resource)
     else
       render json: {errors: "invalid login", status: :unauthorized}, status: :ok
-
     end
   end
 end
