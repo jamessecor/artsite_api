@@ -17,7 +17,7 @@ module Api
         artworks = artworks.where("lower(title) like ? or lower(medium) like ?", "%#{term.downcase}%", "%#{term.downcase}%") if term.to_i == 0
         artworks = artworks.where("year = ? or price = ?", term, term) if term.to_i > 0
       else
-        artworks = Artwork.order(:created_at).limit(15)
+        artworks = Artwork.order(:created_at)
         artworks = artworks.where(year: params[:year_filter]) if params[:year_filter].present?
       end
       artworks = artworks.reorder("RANDOM()") if params[:random].present?
