@@ -19,17 +19,17 @@ google:
   service: GCS
   credentials:
     type: "service_account"
-    project_id: "useful-aquifer-320211"
+    project_id: <%= ENV['gcs_project_id'] %>
     private_key_id: <%= ENV['gcs_private_key_id'] %>
     private_key: <%= ENV['gcs_private_key'] %>
-    client_email: "useful-aquifer-320211@appspot.gserviceaccount.com"
-    client_id: "101212284091715745681"
+    client_email: <%= ENV['gcs_client_email'] %>
+    client_id: <%= ENV['gcs_client_id'] %>
     auth_uri: "https://accounts.google.com/o/oauth2/auth"
     token_uri: "https://accounts.google.com/o/oauth2/token"
     auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs"
-    client_x509_cert_url: ""
-  project: "artsite"
-  bucket: "artsite"
+    client_x509_cert_url: <%= ENV['gcs_client_cert_url'] %>
+  project: <%= ENV['gcs_project'] %>
+  bucket: <%= ENV['gcs_bucket'] %>
 
 
 
